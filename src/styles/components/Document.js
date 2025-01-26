@@ -31,8 +31,8 @@ const Document = css`
   }
 
   body {
-    color: var(--color--black);
-    background-color: var(--color--white);
+    color: var(--color--white);
+    background-color: var(--color--black);
   }
 
   a {

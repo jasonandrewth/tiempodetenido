@@ -2,6 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import localFont from "next/font/local";
 
+import Info from "@/components/Homepage/Info";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -16,7 +18,7 @@ const geistMono = localFont({
 export default function Home() {
   return (
     <>
-      <div>Homepage</div>
+      <Info />
     </>
   );
 }
