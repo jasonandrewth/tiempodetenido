@@ -227,11 +227,13 @@ const Experience = () => {
         .fromTo(
           materialRef.current.uniforms.uProgress,
           { value: 0 },
-          { value: 1, duration: 1, ease: "linear" }
+          { value: 1, duration: 0.6, ease: "linear" }
         )
         .then(() => {
           materialRef.current.uniforms.uTextureDiffuse.value =
             materialRef.current.uniforms.uTextureDiffuseNext.value;
+
+          materialRef.current.uniforms.uTextureDiffuseNext.value = prevTex;
         });
     },
     { dependencies: [currentTexture] }

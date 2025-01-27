@@ -55,7 +55,7 @@ const Marquee = ({ slides = [] }) => {
       const containerDuration = images.length * 6; // Duration for the play indicator to move across (in seconds)
       startIndicatorAnimation(containerWidth, containerDuration, itemWidth);
     }
-  }, []);
+  }, [containerRef.current]);
 
   const startIndicatorAnimation = (containerWidth, duration, itemWidth) => {
     controls.start({
@@ -74,6 +74,7 @@ const Marquee = ({ slides = [] }) => {
   };
 
   const clickHandler = useCallback((e, idx) => {
+    return;
     if (containerRef.current) {
       const itemWidth = containerRef.current.children[0]?.offsetWidth || 0;
       const targetX = itemWidth * idx; // Calculate target position for the clicked div
