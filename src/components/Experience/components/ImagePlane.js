@@ -15,8 +15,8 @@ import {
 } from "@react-three/drei";
 
 //Shaders
-import vertex from "../Materials/shaders/background.vert";
-import fragment from "../Materials/shaders/background.frag";
+import vertex from "../materials/shaders/background.vert";
+import fragment from "../materials/shaders/background.frag";
 
 const DiffuseMaterial = shaderMaterial(
   {

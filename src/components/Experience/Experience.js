@@ -23,7 +23,7 @@ import { useGSAP } from "@gsap/react";
 import Placeholder from "./components/Placeholder";
 
 import Model from "./components/Model";
-import ImagePlane from "./components/ImagePlane";
+// import ImagePlane from "./components/ImagePlane";
 
 //Hooks
 // import { useDebug } from "@/hooks/useDebug";
