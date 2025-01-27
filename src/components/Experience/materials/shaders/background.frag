@@ -109,7 +109,7 @@ void main() {
 
     vec2 colorDifferenceRG = textureNext.rg - textureCurrent.rg;
     vec2 noiseVal = vec2(snoise(vec3(100.0, 100.0, uTime * 0.2)), snoise(vec3(80.0, 80.0, uTime * 0.25)));
-    vec2 direction = normalize(colorDifferenceRG + 0.3 * noiseVal);
+    vec2 direction = normalize(colorDifferenceRG + 0.4 * noiseVal);
 
     //progress anim
     float noiseOrigin = snoise(vec3(vUv, uTime * 0.2));
@@ -121,11 +121,11 @@ void main() {
     float progress = smoothstep(delay, end, uProgress);
 
 //color1 in example touchdesigner
-    // scaledUv.rg += direction * (luminanceDifference * (sin(uTime) * 0.5 + 1.0) * smoothUV);
-    scaledUv.rg += direction * (luminanceDifference * max(0.5, progress) * smoothUV);
+    scaledUv.rg += direction * (luminanceDifference * (sin(uTime) * 0.5 + 1.0) * smoothUV);
+    // scaledUv.rg += direction * (luminanceDifference * max(0.5, progress) * smoothUV);
 
     // color.rg = scaledUv;
-    scaledUv *= luminanceDifference * 0.06;
+    scaledUv *= luminanceDifference * 0.22;
 
     // color.rgb = vec3(0.0);
     vec4 textureCurrentDisplaced = texture2D(uTextureDiffuse, aspectUv + scaledUv);
@@ -151,8 +151,6 @@ void main() {
 
     color.rgb = texNow.rgb;
 
-    color.rgb = vec3(luminanceDifference);
-
     color.rg = scaledUv;
     color.b = 0.0;
 
@@ -164,8 +162,8 @@ void main() {
     float luminanceDifferenceX = abs(luminance(previousFrame) - luminance(textureCurrent));
     color.rgb = vec3(luminanceDifference);
 
-    vec2 ydisplace1 = vec2(aspectUv.x + uProgress * direction.x * (luminanceDifference * smoothUV.x) * 0.1, aspectUv.y + uProgress * direction.y * (luminanceDifference * smoothUV.y) * 0.1);
-    vec2 ydisplace2 = vec2(aspectUv.x + (1.0 - uProgress) * direction.x * (luminanceDifference * smoothUV.x) * 0.1, aspectUv.y + (1.0 - uProgress) * direction.y * (luminanceDifference * smoothUV.y) * 0.1);
+    vec2 ydisplace1 = vec2(aspectUv.x + uProgress * direction.x * (luminanceDifference * smoothUV.x) * 0.2, aspectUv.y + uProgress * direction.y * (luminanceDifference * smoothUV.y) * 0.2);
+    vec2 ydisplace2 = vec2(aspectUv.x + (1.0 - uProgress) * direction.x * (luminanceDifference * smoothUV.x) * 0.2, aspectUv.y + (1.0 - uProgress) * direction.y * (luminanceDifference * smoothUV.y) * 0.2);
     vec4 t1 = texture2D(uTextureDiffuse, ydisplace1);
     vec4 t2 = texture2D(uTextureDiffuseNext, ydisplace2);
     vec4 t2Feed = texture2D(uTextureFeedback, ydisplace2);
@@ -173,10 +171,15 @@ void main() {
     color = mix(t1.rgb, t2.rgb, uProgress);
 
     color.rgb = vec3(luminanceDifference);
-    color.rgb = mix(t1.rgb, t2.rgb, uProgress);
-    color.rgb = blendedOutput = mix(color, previousFrame.rgb, 0.5);
+    color.rgb = mix(t1.rgb, t2.rgb, progress);
+    // color.rgb = mix(color, previousFrame.rgb, 0.4);
 
-    gl_FragColor = vec4(color, 0.3);
+    // color.rgb = mix(texture2D(uTextureDiffuse, aspectUv), texture2D(uTextureDiffuseNext, aspectUv), uProgress).rgb;
+
+    // color.rg = scaledUv;
+    // color.b = 0.0;
+
+    gl_FragColor = vec4(color, 0.2);
 
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
