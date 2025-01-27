@@ -162,7 +162,20 @@ void main() {
     // color = mix(textureCurrent.rgb, previousFrame.rgb, 0.8);
 
     float luminanceDifferenceX = abs(luminance(previousFrame) - luminance(textureCurrent));
-    // color.rgb = vec3(luminanceDifference);
+    color.rgb = vec3(luminanceDifference);
+
+    vec2 ydisplace1 = vec2(aspectUv.x + uProgress * direction.x * (luminanceDifference * smoothUV.x) * 0.1, aspectUv.y + uProgress * direction.y * (luminanceDifference * smoothUV.y) * 0.1);
+    vec2 ydisplace2 = vec2(aspectUv.x + (1.0 - uProgress) * direction.x * (luminanceDifference * smoothUV.x) * 0.1, aspectUv.y + (1.0 - uProgress) * direction.y * (luminanceDifference * smoothUV.y) * 0.1);
+    vec4 t1 = texture2D(uTextureDiffuse, ydisplace1);
+    vec4 t2 = texture2D(uTextureDiffuseNext, ydisplace2);
+    vec4 t2Feed = texture2D(uTextureFeedback, ydisplace2);
+
+    color = mix(t1.rgb, t2.rgb, uProgress);
+
+    color.rgb = vec3(luminanceDifference);
+    color.rgb = mix(t1.rgb, t2.rgb, uProgress);
+    color.rgb = blendedOutput = mix(color, previousFrame.rgb, 0.5);
+
     gl_FragColor = vec4(color, 0.3);
 
     #include <tonemapping_fragment>

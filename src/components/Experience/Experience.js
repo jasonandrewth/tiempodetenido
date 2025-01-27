@@ -77,6 +77,8 @@ const Experience = () => {
 
   const { viewport, size, camera } = useThree();
 
+  const tl = useRef();
+
   const { updateCurrentTexture, currentTexture } = useGlobalData();
   const animationFactor = useMotionValue(0);
   const linearSpringValue = useSpring(animationFactor, LINEAR_CONFIG);
@@ -140,17 +142,17 @@ const Experience = () => {
     }
   }, [currentTexture]);
 
-  useEffect(() => {
-    if (materialRef.current) {
-      materialRef.current.uniforms.uTextureDiffuse.value =
-        textures[currentTexture];
-      materialRef.current.uniforms.uTextureDiffuseNext.value =
-        textures[currentTexture + 1];
-      materialRef.current.needsUpdate = true;
-    }
+  // useEffect(() => {
+  //   if (materialRef.current) {
+  //     materialRef.current.uniforms.uTextureDiffuse.value =
+  //       textures[currentTexture];
+  //     materialRef.current.uniforms.uTextureDiffuseNext.value =
+  //       textures[currentTexture + 1];
+  //     materialRef.current.needsUpdate = true;
+  //   }
 
-    console.log(textures[currentTexture].image);
-  }, []);
+  //   console.log(textures[currentTexture].image);
+  // }, []);
   //Switch textures for demo
   useEffect(() => {
     if (!materialRef.current) return;
@@ -219,25 +221,79 @@ const Experience = () => {
       )
         return;
 
-      let prevTex = materialRef.current.uniforms.uTextureDiffuse.value;
-      materialRef.current.uniforms.uTextureDiffuseNext.value =
-        textures[currentTexture] ?? textures[0];
-      //Animate progress
-      gsap
-        .fromTo(
-          materialRef.current.uniforms.uProgress,
-          { value: 0 },
-          { value: 1, duration: 0.6, ease: "linear" }
-        )
-        .then(() => {
-          materialRef.current.uniforms.uTextureDiffuse.value =
-            materialRef.current.uniforms.uTextureDiffuseNext.value;
+      if (materialRef.current) {
+        materialRef.current.uniforms.uTextureDiffuse.value =
+          textures[currentTexture];
+        materialRef.current.uniforms.uTextureDiffuseNext.value =
+          textures[currentTexture + 1] ?? textures[0];
+        // materialRef.current.needsUpdate = true;
+      }
 
-          materialRef.current.uniforms.uTextureDiffuseNext.value = prevTex;
-        });
+      // if (materialRef.current) {
+      //   materialRef.current.uniforms.uTextureDiffuse.value =
+      //     textures[currentTexture];
+      //   materialRef.current.uniforms.uTextureDiffuseNext.value =
+      //     textures[currentTexture + 1] ?? textures[0];
+      //   // materialRef.current.needsUpdate = true;
+      // }
+
+      tl.current = gsap.timeline().to(materialRef.current.uniforms.uProgress, {
+        value: 1,
+        duration: 4,
+        ease: "power2.inOut",
+        onComplete: () => {
+          console.log("finish anim");
+          let temp = materialRef.current.uniforms.uTextureDiffuseNext.value;
+          materialRef.current.uniforms.uTextureDiffuseNext.value =
+            materialRef.current.uniforms.uTextureDiffuse.value;
+          materialRef.current.uniforms.uTextureDiffuseNext.value = temp;
+          materialRef.current.uniforms.uProgress.value = 0;
+
+          console.log(
+            materialRef.current.uniforms.uTextureDiffuse.value,
+            materialRef.current.uniforms.uTextureDiffuseNext.value
+          );
+        },
+      });
     },
     { dependencies: [currentTexture] }
   );
+
+  // useGSAP(
+  //   () => {
+  //     if (
+  //       materialRef.current.uniforms.uTextureDiffuse.value ==
+  //       textures[currentTexture]
+  //     )
+  //       return;
+
+  //     if (materialRef.current) {
+  //       materialRef.current.uniforms.uTextureDiffuse.value =
+  //         textures[currentTexture];
+  //       materialRef.current.uniforms.uTextureDiffuseNext.value =
+  //         textures[currentTexture + 1] ?? textures[0];
+  //       // materialRef.current.needsUpdate = true;
+  //     }
+
+  //     let prevTex = materialRef.current.uniforms.uTextureDiffuse.value;
+  //     materialRef.current.uniforms.uTextureDiffuseNext.value =
+  //       textures[currentTexture] ?? textures[0];
+  //     //Animate progress
+  //     gsap
+  //       .fromTo(
+  //         materialRef.current.uniforms.uProgress,
+  //         { value: 0 },
+  //         { value: 1, duration: 0.6, ease: "linear" }
+  //       )
+  //       .then(() => {
+  //         materialRef.current.uniforms.uTextureDiffuse.value =
+  //           materialRef.current.uniforms.uTextureDiffuseNext.value;
+
+  //         materialRef.current.uniforms.uTextureDiffuseNext.value = prevTex;
+  //       });
+  //   },
+  //   { dependencies: [currentTexture] }
+  // );
 
   /**
    * Main Frame Loop
