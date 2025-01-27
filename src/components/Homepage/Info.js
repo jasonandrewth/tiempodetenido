@@ -62,19 +62,22 @@ const styles = {
 
     p {
       opacity: 0;
+      user-select: none;
+      pointer-events: none;
       transition: opacity 0.25s linear;
     }
 
     &[data-visible="true"] {
       p {
         opacity: 1;
+        user-select: auto;
       }
     }
   `,
 
   logo: css`
     font-family: var(--font-slyther);
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: var(--type--lineheight--0);
   `,
 
@@ -85,6 +88,8 @@ const styles = {
     transform: translate(-50%, 0);
     padding-top: var(--gap-s);
 
+    color: rgba(255, 255, 255, 0.6);
+
     /* background-color: red; */
 
     @media ${MediaQueries.mobile} {
@@ -94,6 +99,7 @@ const styles = {
   `,
   info: css`
     position: absolute;
+    font-weight: 900;
     top: 0;
     right: 0;
     cursor: pointer;

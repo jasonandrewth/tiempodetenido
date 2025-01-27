@@ -9,7 +9,7 @@ const Model = () => {
 
   const rotationRef = useRef(null);
 
-  console.log(model.scene);
+  // console.log(model.scene);
 
   const testMat = new MeshStandardMaterial({
     color: 0x2a2a2a,
@@ -22,28 +22,29 @@ const Model = () => {
     if (rotationRef.current) {
       //   rotationRef.current.rotation.y += delta * 0.5;
       rotationRef.current.rotation.y += delta * 0.15;
+      // console.log(rotationRef.current.rotation.y);
     }
   });
 
   return (
     <>
       <Clone
-        visible={true}
+        visible={false}
         ref={rotationRef}
         // ref={rotationRef}
         object={model.scene}
-        modelViewMatrix={model.scene.children[0].modelViewMatrix}
-        scale={0.02}
+        // modelViewMatrix={model.scene.children[0].modelViewMatrix}
+        scale={0.05}
         // rotation-y={Math.PI * 0.5}
         // rotation-x={Math.PI * 0.15}
-        position={[0, 0, 1.8]}
+        position={[0, 0, 0]}
       />
       <group
         visible={false}
         ref={rotationRef}
         scale={0.25}
-        rotation-y={Math.PI * 0.5}
-        position={[0, -0.5, 1.8]}
+        // rotation-y={Math.PI * 0.5}
+        position={[0, -0.5, 0]}
         castShadow
       >
         <mesh

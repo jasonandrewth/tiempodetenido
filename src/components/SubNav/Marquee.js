@@ -22,6 +22,7 @@ import useFrameLoop from "@/hooks/useFrameLoop";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 // import { InView } from "react-intersection-observer";
+import { useGlobalData } from "@/context/Global";
 
 const images = [
   "/testimgs/image1.jpg",
@@ -44,6 +45,8 @@ const Marquee = ({ slides = [] }) => {
   const controls = useAnimation(); // Controls for the play indicator animation
   const resumeTimeout = useRef(null);
   const pauseDelay = 100;
+
+  const { updateCurrentTexture, currentTexture } = useGlobalData();
 
   useEffect(() => {
     if (containerRef.current) {
@@ -119,6 +122,7 @@ const Marquee = ({ slides = [] }) => {
         );
 
         if (currentIndex !== activeIndex) {
+          updateCurrentTexture(currentIndex);
           setActiveIndex(currentIndex); // Update the active index
         }
       }
@@ -142,7 +146,7 @@ const Marquee = ({ slides = [] }) => {
             slide={1}
             clickHandler={clickHandler}
             url={url}
-            isActive={idx === activeIndex}
+            isActive={idx === currentTexture}
           />
         ))}
       </div>

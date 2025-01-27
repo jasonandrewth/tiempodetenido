@@ -16,7 +16,7 @@ import { Favicons } from "@/components/Global/Head/Favicons";
 
 //Providers
 import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
-
+import { GlobalContextProvider } from "@/context/Global";
 //Components
 import Marquee from "../SubNav/Marquee";
 
@@ -56,15 +56,17 @@ const Layout = ({ children }) => {
       <Global styles={GlobalStyles} />
       {/* <MatomoAnalytics /> */}
       <ReactLenis root>
-        <main
-          className={`${slytherRegular.variable} ${roboto.className}`}
-          ref={ref}
-          css={styles.wrapper}
-        >
-          <Scene eventSource={ref} eventPrefix="client" />
-          <PageTransitions>{children}</PageTransitions>
-          <Marquee />
-        </main>
+        <GlobalContextProvider>
+          <main
+            className={`${slytherRegular.variable} ${roboto.className}`}
+            ref={ref}
+            css={styles.wrapper}
+          >
+            <Scene eventSource={ref} eventPrefix="client" />
+            <PageTransitions>{children}</PageTransitions>
+            <Marquee />
+          </main>
+        </GlobalContextProvider>
       </ReactLenis>
     </>
   );

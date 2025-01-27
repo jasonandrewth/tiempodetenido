@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
+    "@gsap/react": "^2.1.2",
     "@juggle/resize-observer": "^3.4.0",
     "@react-three/drei": "^9.121.3",
     "@react-three/fiber": "^8.17.12",

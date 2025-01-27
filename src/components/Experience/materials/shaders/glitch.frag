@@ -1,6 +1,5 @@
 varying vec2 vUv;
 uniform float uTime;
-uniform float uProgress;
 uniform vec3 uColor;
 uniform vec4 uRes;
 uniform sampler2D uTextureDiffuse;
@@ -21,7 +20,7 @@ void main() {
     color = uColor;
     color.rg = vUv;
     vec2 smoothUV = smoothstep(0.0, 0.1, vUv);
-    smoothUV *= vec2(smoothstep(0.0, 0.1, 1.0 - vUv));
+    smoothUV *= vec2(smoothstep(0.0, 0.1, 1.0 - aspectUv));
 
     vec4 textureCurrent = texture2D(uTextureDiffuse, aspectUv);
     vec4 textureNext = texture2D(uTextureDiffuseNext, aspectUv);
@@ -34,11 +33,10 @@ void main() {
     vec2 direction = normalize(colorDifferenceRG + sin(uTime) * 0.5);
 
     //color1 in example touchdesigner
-    // scaledUv.rg += direction * (luminanceDifference * (sin(uTime) * 0.5 + 1.0) * smoothUV);
-    scaledUv.rg += direction * (luminanceDifference * uProgress * smoothUV);
+    scaledUv.rg += direction * (luminanceDifference * (sin(uTime) * 0.5 + 1.0) * smoothUV);
 
     // color.rg = scaledUv;
-    scaledUv *= luminanceDifference * 0.5;
+    scaledUv *= 0.05;
 
     // color.rgb = vec3(0.0);
     vec4 textureCurrentDisplaced = texture2D(uTextureDiffuse, aspectUv + scaledUv);
@@ -48,20 +46,15 @@ void main() {
     color.rgb = textureCurrent.rgb;
 
     // Blend with the previous frame
-    vec2 animatedUv = vUv;
-    animatedUv -= 0.005 * vec2(cos(uTime * 0.5), sin(uTime));
-    // animatedUv *= 1.01;
-    vec4 previousFrame = texture2D(uTextureFeedback, vUv + scaledUv);
-    vec3 blendedOutput = mix(color, previousFrame.rgb, 0.7);
+    vec4 previousFrame = texture2D(uTextureFeedback, vUv);
+    vec3 blendedOutput = mix(color, previousFrame.rgb, 0.7); 
 
     // color.rgb = vec3((sin(uTime) + 1.0) * 0.5);
     // color.rgb = vec3(1.0, 0.0, 0.0);
-    color.rg = scaledUv;
-    color.b = 0.0;
+    // color.rg = vUv;
+    // color.b = 0.0;
 
-    color = mix(textureCurrent.rgb, previousFrame.rgb, 0.9);
-    // color = mix(textureCurrentDisplaced.rgb, textureNextDisplaced.rgb, uProgress);
-    gl_FragColor = vec4(color, 0.3);
+    gl_FragColor = vec4(color, 1.0);
 
     #include <tonemapping_fragment>
     #include <colorspace_fragment>

@@ -22,6 +22,7 @@ export default function Scene({ colorData, ...props }) {
         }}
       >
         <Canvas
+          // camera={{ position: [0, 0, 4500], near: 0.01, far: 6000 }}
           // camera={{ fov: 25, position: [0, 0, 1.15], near: 0.001, far: 100 }}
           dpr={[1, 2]}
           {...props}
@@ -62,12 +63,12 @@ const styles = {
       display: block;
 
       background-color: var(--color--background);
-      background-image: linear-gradient(
+      /* background-image: linear-gradient(
         50deg,
         rgba(255, 255, 200, 0.2),
         rgba(0, 0, 0, 0),
         rgba(0, 0, 0, 0.5)
-      );
+      ); */
 
       transition-property: opacity;
       transition-duration: 0ms;
