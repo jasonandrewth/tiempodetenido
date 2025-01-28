@@ -12,12 +12,12 @@ const Info = () => {
   };
 
   return (
-    <header css={styles.header} data-visible={visible}>
+    <header css={styles.header}>
       <span css={styles.logo}>Tiempo Detenido</span>
       <span css={styles.info} onClick={clickHandler}>
         {visible ? "close" : "info"}
       </span>
-      <div css={styles.body}>
+      <div css={styles.body} data-visible={visible}>
         <p>
           These one-of-a-kind chairs are crafted from volcanic rock sourced from
           the rich and historic landscapes of Mexico. Each piece embodies the
@@ -65,20 +65,6 @@ const styles = {
       font-size: var(--type--scale---1);
       line-height: var(--type--lineheight--1);
     }
-
-    p {
-      opacity: 0;
-      user-select: none;
-      pointer-events: none;
-      transition: opacity 0.25s linear;
-    }
-
-    &[data-visible="true"] {
-      p {
-        opacity: 1;
-        user-select: auto;
-      }
-    }
   `,
 
   logo: css`
@@ -101,6 +87,16 @@ const styles = {
     span {
       color: var(--color--white);
       font-weight: 900;
+    }
+
+    opacity: 0;
+    user-select: none;
+    pointer-events: none;
+    transition: opacity 0.25s linear;
+
+    &[data-visible="true"] {
+      opacity: 1;
+      user-select: auto;
     }
 
     @media ${MediaQueries.mobile} {
