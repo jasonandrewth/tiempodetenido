@@ -14,7 +14,7 @@ const Model = () => {
   const testMat = new MeshStandardMaterial({
     color: 0x111111,
     metalness: 0.0,
-    roughness: 0.3,
+    roughness: 0.4,
   });
 
   // auto-rotate

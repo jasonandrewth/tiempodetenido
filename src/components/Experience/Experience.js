@@ -353,7 +353,7 @@ const Experience = () => {
           {/* <Environment map={texture} /> */}
           <directionalLight position={[2, 2, 5]} intensity={1} castShadow />
           {/* <hemisphereLight color={0xffffff} intensity={10.5} castShadow /> */}
-          <ambientLight intensity={1} color={0xffffff} />
+          <ambientLight intensity={7} color={0xffffff} />
           <Suspense
             fallback={<Placeholder position={[0, 0, 0]} scale={[2, 2, 2]} />}
           >
