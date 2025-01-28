@@ -68,6 +68,7 @@ const styles = {
   `,
 
   logo: css`
+    line-break: none;
     font-family: var(--font-slyther);
     font-size: 1.1rem;
     line-height: var(--type--lineheight--0);

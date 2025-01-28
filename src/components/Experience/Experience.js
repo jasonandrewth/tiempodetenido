@@ -332,6 +332,7 @@ const Experience = () => {
       quad.current.material.map = renderBufferClean.texture;
     }
     gl.render(mainScene, camera);
+    gl.render(objectScene, camera);
 
     // //Use for debugging
     // gl.clearColor();
@@ -348,7 +349,7 @@ const Experience = () => {
     <>
       {createPortal(
         <>
-          {/* <OrbitControls makeDefault /> */}
+          {/* <OrbitControls makeDefault={false} /> */}
           {/* <Environment map={texture} /> */}
           <directionalLight position={[2, 2, 5]} intensity={1} castShadow />
           {/* <hemisphereLight color={0xffffff} intensity={10.5} castShadow /> */}

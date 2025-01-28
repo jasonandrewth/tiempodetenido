@@ -5,22 +5,22 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { useLoader, useFrame } from "@react-three/fiber";
 
 const Model = () => {
-  const model = useGLTF("./Models/camera.glb");
+  const model = useGLTF("./Models/chairtestcenter.glb");
 
   const rotationRef = useRef(null);
 
   // console.log(model.scene);
 
   const testMat = new MeshStandardMaterial({
-    color: 0x2a2a2a,
+    color: 0x111111,
     metalness: 0.0,
-    roughness: 0.1,
+    roughness: 0.3,
   });
 
   // auto-rotate
   useFrame((state, delta) => {
     if (rotationRef.current) {
-      //   rotationRef.current.rotation.y += delta * 0.5;
+      // rotationRef.current.rotation.y += delta * 0.5;
       rotationRef.current.rotation.y += delta * 0.15;
       // console.log(rotationRef.current.rotation.y);
     }
@@ -28,23 +28,23 @@ const Model = () => {
 
   return (
     <>
-      <Clone
-        visible={false}
+      {/* <Clone
+        visible={true}
         ref={rotationRef}
         // ref={rotationRef}
         object={model.scene}
         // modelViewMatrix={model.scene.children[0].modelViewMatrix}
-        scale={0.05}
+        scale={0.8}
         // rotation-y={Math.PI * 0.5}
         // rotation-x={Math.PI * 0.15}
-        position={[0, 0, 0]}
-      />
+        position={[0.4, 0, 0]}
+      /> */}
       <group
-        visible={false}
+        visible={true}
         ref={rotationRef}
-        scale={0.25}
-        // rotation-y={Math.PI * 0.5}
-        position={[0, -0.5, 0]}
+        scale={0.8}
+        rotation-x={Math.PI * 0.01}
+        position={[0.0, 0, 0]}
         castShadow
       >
         <mesh
@@ -67,6 +67,6 @@ const Model = () => {
   );
 };
 
-useGLTF.preload("./Models/camera.glb");
+useGLTF.preload("./Models/chairtestcenter.glb");
 
 export default Model;
