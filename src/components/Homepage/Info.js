@@ -43,6 +43,12 @@ const Info = () => {
           the curves of Tiempo Detenido, you become part of a narrative of both
           serenity and strength, rooted deeply in the volcanic heart of Mexico.
         </p>
+        <br></br>
+        <span>
+          {/* <a href="mailto:contact@tiempo-detenido.com"> */}
+          contact@tiempo-detenido.com
+          {/* </a> */}
+        </span>
       </div>
     </header>
   );
@@ -84,17 +90,22 @@ const styles = {
   body: css`
     position: absolute;
     width: 50%;
-    left: 50%;
-    transform: translate(-50%, 0);
+    left: 0;
+    transform: translate(0, 0);
     padding-top: var(--gap-s);
 
     color: rgba(255, 255, 255, 0.6);
 
     /* background-color: red; */
 
+    span {
+      color: var(--color--white);
+      font-weight: 900;
+    }
+
     @media ${MediaQueries.mobile} {
       padding-top: var(--gap-s);
-      width: 100%;
+      width: 80%;
     }
   `,
   info: css`
