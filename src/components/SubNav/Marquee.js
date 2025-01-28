@@ -52,7 +52,7 @@ const Marquee = ({ slides = [] }) => {
     if (containerRef.current) {
       const containerWidth = containerRef.current.scrollWidth; // Total scrollable width of the container
       const itemWidth = containerRef.current.children[0]?.offsetWidth || 0;
-      const containerDuration = images.length * 6; // Duration for the play indicator to move across (in seconds)
+      const containerDuration = images.length * 3.5; // Duration for the play indicator to move across (in seconds)
       startIndicatorAnimation(containerWidth, containerDuration, itemWidth);
     }
   }, [containerRef.current]);

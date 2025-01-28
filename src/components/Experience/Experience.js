@@ -146,8 +146,8 @@ const Experience = () => {
     if (materialRef.current) {
       materialRef.current.uniforms.uTextureDiffuse.value =
         textures[currentTexture];
-      materialRef.current.uniforms.uTextureDiffuseNext.value =
-        textures[currentTexture + 1];
+      // materialRef.current.uniforms.uTextureDiffuseNext.value =
+      //   textures[currentTexture + 1];
       materialRef.current.needsUpdate = true;
     }
 

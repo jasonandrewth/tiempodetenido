@@ -176,8 +176,13 @@ void main() {
 
     // color.rgb = mix(texture2D(uTextureDiffuse, aspectUv), texture2D(uTextureDiffuseNext, aspectUv), uProgress).rgb;
 
-    // color.rg = scaledUv;
-    // color.b = 0.0;
+    // dream like
+    animatedUv = vUv;
+    // animatedUv -= 0.005 * vec2(cos(uTime * 0.5), sin(uTime));
+    animatedUv *= 1.01;
+    previousFrame = texture2D(uTextureFeedback, animatedUv);
+    blendedOutput = mix(color, previousFrame.rgb, 0.7);
+    color = blendedOutput;
 
     gl_FragColor = vec4(color, 0.2);
 
